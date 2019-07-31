@@ -74,12 +74,12 @@ class Profil
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\skill", mappedBy="profil")
+     * @ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="profil")
      */
     private $skills;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\project", mappedBy="profil")
+     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="profil")
      */
     private $projects;
 

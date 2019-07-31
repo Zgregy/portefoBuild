@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PortefoBuild{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row text-center mt-5">
+            <div class="col-12">
+                <h1>Portefobuild</h1>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-4">
+                <div class="card border-secondary mb-3" style="max-width: 22rem;">
+                    <div class="card-header text-center">{{ profil.firstname }} {{ profil.lastname }}</div>
+                    <div class="card-body">
+                        <h4 class="card-title text-center">{{ profil.poste }}</h4>
+                        <ul style="list-style-type: none;">
+                            <li><p class="card-text"><i class="fas fa-road mr-3"></i>{{ profil.address }}, {{ profil.zipcode }} {{ profil.city }}</p></li>
+                            <li><p class="card-text"><i class="fas fa-envelope mr-3"></i>{{ profil.email }}</p></li>
+                            <li><p class="card-text"><i class="fas fa-phone mr-3"></i>{{ profil.phone }}</p></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {# tableau des skill #}
+        <div class="row text-center">
+            <div class="col-12 pr-0 pl-0" style="border: solid 1px black;">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr class="table-info">
+                            <th colspan="3"><h5>Tableau des compétences<h5></th>
+                        </tr>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for skill in profil.skills %}
+                            {% if(skill.id%2 == 1) %}
+                                <tr class="table-active">
+                            {% else %}
+                                <tr class="table-secondary">
+                            {% endif %}
+                                <th scope="row">{{ skill.title }}</th>
+                                <td>{{ skill.desciption }}</td>
+                                <td><i class="far fa-edit"></i> <i class="far fa-trash-alt"></i></td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                    </tbody>
+                </table> 
+            </div>
+        </div>
+        <div class="row text-right mt-2">
+            <div class="col-12">
+                <button type="button" class="btn btn-primary">Nouvelle compétence</button>
+            </div>
+        </div>
+        {# tableau des projet #}
+        <div class="row text-center mt-5">
+            <div class="col-12 pr-0 pl-0" style="border: solid 1px black;">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr class="table-info">
+                            <th colspan="5"><h5>Tableau des projets<h5></th>
+                        </tr>
+                        <tr>
+                            <th scope="col">Project name</th>
+                            <th scope="col">Realized</th>
+                            <th scope="col">Short description</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for project in profil.projects %}
+                            {% if(project.id%2 == 1) %}
+                                <tr class="table-active">
+                            {% else %}
+                                <tr class="table-secondary">
+                            {% endif %}
+                                <th scope="row">{{ project.name }}</th>
+                                <td>{{ project.realized }}</td>
+                                <td>{{ project.shortDescription }}</td>
+                                <td>{{ project.longDescription }}</td>
+                                <td><i class="far fa-edit"></i> <i class="far fa-trash-alt"></i></td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                    </tbody>
+                </table> 
+            </div>
+        </div>
+        <div class="row text-right mt-2">
+            <div class="col-12">
+                <button type="button" class="btn btn-primary">Nouvelle compétence</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

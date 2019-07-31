@@ -44,9 +44,14 @@ class Project
     private $profil;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\techno", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="App\Entity\Techno", mappedBy="project")
      */
     private $technos;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
 
     public function __construct()
     {
@@ -145,6 +150,18 @@ class Project
                 $techno->setProject(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

@@ -37,6 +37,7 @@ class AppFixtures extends Fixture
             
             $project = new Project();
             $project->setPicture("prouteproute")
+                    ->setName("Factory")
                     ->setRealized("Réalisé chez PRODEO")
                     ->setShortDescription("Voici mon doigt")
                     ->setLongDescription("Voici mon doigts qui est un dérivé du doigts au même emplacement sur mon pied plus communement appelé orteille.")

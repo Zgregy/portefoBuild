@@ -6,9 +6,19 @@
     <div class="container">
         <div class="row text-center mt-5">
             <div class="col-12">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row text-center mt-5">
+            <div class="col-12">
                 <h1>Portefobuild</h1>
             </div>
         </div>
+        {# Card user #}
         <div class="row justify-content-md-center">
             <div class="col-4">
                 <div class="card border-secondary mb-3" style="max-width: 22rem;">
@@ -22,6 +32,20 @@
                         </ul>
                     </div>
                 </div>
+            </div>
+        </div>
+        {# Description #}
+        <div class="row ">
+            <div class="col-12">
+                <h4>Présentation : </h4>
+                <p>{{ profil.presentation | raw }}</p>
+            </div>
+        </div>
+        {# Parcours #}
+        <div class="row ">
+            <div class="col-12">
+                <h4>Parcours : </h4>
+                <p>{{ profil.course | raw }}</p>
             </div>
         </div>
         {# tableau des skill #}
@@ -47,7 +71,15 @@
                             {% endif %}
                                 <th scope="row">{{ skill.title }}</th>
                                 <td>{{ skill.desciption }}</td>
-                                <td><i class="far fa-edit"></i> <i class="far fa-trash-alt"></i></td>
+                                <td>
+                                    <a class="btn btn-icon" href="{{ path('user.skill.edit', {id: skill.id}) }}"><i class="far fa-edit"></i></a> 
+                                    <form method="post" action="{{ path('user.skill.delete', {id: skill.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr de vouloir supprimer cette compétence ?')">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ skill.id) }}">
+                                        <button class="btn btn-icon"><i class="far fa-trash-alt"></i></button>
+                                    </form>
+                                    {# <a href="{{ path('user.skill.delete', {id: skill.id}) }}"><i class="far fa-trash-alt"></i></a> #}
+                                </td>
                             </tr>
                         {% endfor %}
                         <tr>
@@ -57,7 +89,7 @@
         </div>
         <div class="row text-right mt-2">
             <div class="col-12">
-                <button type="button" class="btn btn-primary">Nouvelle compétence</button>
+                <a href="{{ path('user.skill.new') }}" class="btn btn-primary">Nouvelle compétence</a>
             </div>
         </div>
         {# tableau des projet #}
@@ -66,19 +98,20 @@
                 <table class="table table-hover mb-0">
                     <thead>
                         <tr class="table-info">
-                            <th colspan="5"><h5>Tableau des projets<h5></th>
+                            <th colspan="6"><h5>Tableau des projets<h5></th>
                         </tr>
                         <tr>
                             <th scope="col">Project name</th>
                             <th scope="col">Realized</th>
                             <th scope="col">Short description</th>
                             <th scope="col">Description</th>
+                            <th scope="col">Technologies</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for project in profil.projects %}
-                            {% if(project.id%2 == 1) %}
+                            {% if(loop.index%2 == 1) %}
                                 <tr class="table-active">
                             {% else %}
                                 <tr class="table-secondary">
@@ -87,7 +120,21 @@
                                 <td>{{ project.realized }}</td>
                                 <td>{{ project.shortDescription }}</td>
                                 <td>{{ project.longDescription }}</td>
-                                <td><i class="far fa-edit"></i> <i class="far fa-trash-alt"></i></td>
+                                <td>
+                                    <ul>
+                                        {% for techno in project.technos %}
+                                            <li>{{ techno.name }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                                <td>
+                                    <a class="btn btn-icon" href="{{ path('user.project.edit', {id: project.id}) }}"><i class="far fa-edit"></i></a> 
+                                    <form method="post" action="{{ path('user.project.delete', {id: project.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr de vouloir supprimer ce projet ?')">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ project.id) }}">
+                                        <button class="btn btn-icon"><i class="far fa-trash-alt"></i></button>
+                                    </form>
+                                </td>
                             </tr>
                         {% endfor %}
                         <tr>
@@ -97,7 +144,7 @@
         </div>
         <div class="row text-right mt-2">
             <div class="col-12">
-                <button type="button" class="btn btn-primary">Nouvelle compétence</button>
+                <a href="{{ path('user.project.new') }}" class="btn btn-primary">Nouveau projet</a>
             </div>
         </div>
     </div>

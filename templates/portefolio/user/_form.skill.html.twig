@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+    <div class="row mt-5">
+        <div class="col-12">
+            {{ form_rest(form) }}
+        </div>
+    </div>
+    <div class="row text-right mt-2">
+        <div class="col-12">
+            <a  href="{{ path('homePageUser') }}" class="btn btn-primary">Annuler</a>
+            <button type="submit" class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
+        </div>
+    </div>
+{{ form_end(form) }}

@@ -44,7 +44,7 @@ class Project
     private $profil;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Techno", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="App\Entity\Techno", mappedBy="project", cascade={"remove"})
      */
     private $technos;
 

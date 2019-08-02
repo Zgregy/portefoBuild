@@ -2,25 +2,26 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
-use Doctrine\Common\Persistence\ObjectManager;
-// use App\Controller\SecurityController;
-use App\Form\ProjectType;
-use App\Form\ProfilType;
+use App\Entity\Skill;
+use App\Entity\Profil;
+use App\Entity\Techno;
+use App\Entity\Project;
 use App\Form\SkillType;
+// use App\Controller\SecurityController;
+use App\Form\ProfilType;
+use App\Form\ProjectType;
+use App\Repository\SkillRepository;
 use App\Repository\ProfilRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\SkillRepository;
-use App\Entity\Profil;
-use App\Entity\Skill;
-use App\Entity\Project;
-use App\Entity\Techno;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class PortefolioController extends AbstractController {
     /**
@@ -188,11 +189,15 @@ class PortefolioController extends AbstractController {
     /**
      * @Route("/portefolio/user/setting", name="user.setting")
      */
-    public function editProfil(UserInterface $user, Request $request): Response {
+    public function editProfil(UserInterface $user, Request $request, UserPasswordEncoderInterface $encoder): Response {
         $form = $this->createForm(ProfilType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $hash = $encoder->encodePassword($user, $user->getPassword());
+
+            $user->setPassword($hash);
+
             $this->em->flush();
             $this->addFlash('success', 'Profile modifié avec succès');
             return $this->redirectToRoute('homePageUser');

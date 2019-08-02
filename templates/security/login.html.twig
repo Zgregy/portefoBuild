@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {# <div class="row text-center mt-5">
+            <div class="col-12">
+                <h1>Connnexion</h1>
+            </div>
+        </div> #}
+        <form action="{{ path('security_login') }}" method="post">
+            <fieldset>
+            <div class="row justify-content-md-center mt-5">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="InputEmail">Adresse mail</label>
+                        <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Email" name="_username" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="InputPassword">Mot de passe</label>
+                        <input type="password" class="form-control" id="InputPassword" placeholder="Mot de passe" name="_password" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-md-center text-center">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Connexion</button>
+                </div>
+            </div>
+
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

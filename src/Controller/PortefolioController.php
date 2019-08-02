@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Persistence\ObjectManager;
+// use App\Controller\SecurityController;
 use App\Form\ProjectType;
 use App\Form\SkillType;
 use App\Repository\ProfilRepository;
@@ -52,8 +53,6 @@ class PortefolioController extends AbstractController {
      * @Route("/", name="portefolio")
      */
     public function index(): Response {
-        $testing = $this->repository->find(1);
-        dump($testing);
         return $this->render('portefolio/index.html.twig', [
             'controller_name' => 'PortefolioController',
         ]);
@@ -63,10 +62,11 @@ class PortefolioController extends AbstractController {
      * @Route("/portefolio/user", name="homePageUser")
      */
     public function homepageUser(): Response {
-        $testing = $this->profilRepository->find(2);
-        return $this->render('portefolio/user/home.html.twig', [
-            'profil' => $testing,
-        ]);
+        // $testing = $this->profilRepository->find(2);
+        // return $this->render('portefolio/user/home.html.twig', [
+        //     'profil' => $testing,
+        // ]);
+        return $this->render('portefolio/user/home.html.twig');
     }
     
     /**

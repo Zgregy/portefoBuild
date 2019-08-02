@@ -2,14 +2,22 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProfilRepository")
+ * @UniqueEntity(
+ *  fields={"email"},
+ *  message="L'email que vous avez indiqué est déjà utilisé !"
+ * )
  */
-class Profil
+class Profil implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -55,6 +63,7 @@ class Profil
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email()
      */
     private $email;
 
@@ -70,8 +79,14 @@ class Profil
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min="4")
      */
     private $password;
+
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="Les mot de passe ne sont pas identiques")
+     */
+    public $confirm_password;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="profil")
@@ -286,5 +301,15 @@ class Profil
         }
 
         return $this;
+    }
+
+    public function getUsername() {}
+
+    public function eraseCredentials() {}
+
+    public function getSalt() {}
+
+    public function getRoles() {
+        return ['ROLE_USER'];
     }
 }

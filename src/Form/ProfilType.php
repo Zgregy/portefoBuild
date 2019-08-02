@@ -6,6 +6,7 @@ use App\Entity\Profil;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class ProfilType extends AbstractType
 {
@@ -20,9 +21,10 @@ class ProfilType extends AbstractType
             ->add('city')
             ->add('phone')
             ->add('email')
+            ->add('password', PasswordType::class)
+            ->add('confirm_password', PasswordType::class)
             ->add('course')
             ->add('presentation')
-            ->add('password')
         ;
     }
 

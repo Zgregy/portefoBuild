@@ -21,7 +21,9 @@
         </div>
         <div class="row text-center">
             <div class="col-12">
-                <button type="button" class="btn btn-primary">S'inscrire</button>
+            {% if not app.user %}
+                <a href="{{ path('security_registration') }}" class="btn btn-primary">S'inscrire</a>
+            {% endif %}
             </div>
         </div>
     </div>

@@ -9,33 +9,39 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">PROTEFOBUILD</a>
+            <a class="navbar-brand" href="{{ path("portefolio") }}">PROTEFOBUILD</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarColor02">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
+                    {# <li class="nav-item">
                         <a class="nav-link" href="#">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Features</a>
-                    </li>
-                    </li>
+                    </li> #}
                 </ul>
                 {# <span>
                     <i class="fas fa-user" style="font-size: 3em;"></i>
                     John Doe
                 </span> #}
-                <div class="btn-group">
+                <div id="test" class="btn-group">
                     <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style="color:white;">
-                        <i class="fas fa-user" style="font-size: 2em;background-color: transparent;"></i><span style="padding-left: 10px;">John Doe</span>
+                        {% if not app.user %}
+                            <i class="fas fa-user" style="font-size: 2em;background-color: transparent;"></i><span style="padding-left: 10px;">Utilisateur</span>
+                        {% else %}
+                            <i class="fas fa-user" style="font-size: 2em;background-color: transparent;"></i><span style="padding-left: 10px;">{{ app.user.firstname }} {{ app.user.lastname }}</span>
+                        {% endif %}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <button class="dropdown-item" type="button">Connexion</button>
-                        <button class="dropdown-item" type="button">Paramètre</button>
-                        <button class="dropdown-item" type="button">Déconnexion</button>
+                    {% if not app.user %}
+                        <a href="{{ path("security_login") }}" class="dropdown-item">Connexion</a>
+                    {% else %}
+                        <a class="dropdown-item">Paramètre</a>
+                        <a href="{{ path("security_logout") }}" class="dropdown-item">Déconnexion</a>
+                    {% endif %}
                     </div>
                 </div>
             </div>
@@ -59,6 +65,10 @@
             
             .btn-icon:focus {
                 border: hidden!important;
+            }
+
+            #test {
+                cursor: pointer;
             }
         </style>
         {% block javascripts %}{% endblock %}

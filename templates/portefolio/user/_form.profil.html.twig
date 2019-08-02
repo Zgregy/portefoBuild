@@ -1,0 +1,58 @@
+{{ form_start(form) }}
+    <div class="row mt-5">
+        <div class="col-6">
+            {{ form_row(form.firstname, {'attr': {'placeholder': 'Prénom'}}) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.lastname, {'attr': {'placeholder': 'Nom'}}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.email, {'attr': {'placeholder': 'Email'}}) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.phone, {'attr': {'placeholder': 'Téléphone'}}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            {{ form_row(form.address, {'attr': {'placeholder': 'Adresse'}}) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.zipcode, {'attr': {'placeholder': 'Code postal'}}) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.city, {'attr': {'placeholder': 'Ville'}}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {{ form_row(form.poste, {'attr': {'placeholder': 'Métier'}}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.password, {'attr': {'placeholder': 'Mot de passe'}}) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.confirm_password, {'attr': {'placeholder': 'Confirmation mot de passe'}}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {{ form_row(form.presentation, {'attr': {'placeholder': 'Présentation..'}}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {{ form_row(form.course, {'attr': {'placeholder': 'Pacours..'}}) }}
+        </div>
+    </div>
+    <div class="row text-right mt-2">
+        <div class="col-12">
+            <a  href="{{ path('portefolio') }}" class="btn btn-primary">Annuler</a>
+            <button type="submit" class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
+        </div>
+    </div>
+{{ form_end(form) }}

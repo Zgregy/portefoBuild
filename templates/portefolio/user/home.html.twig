@@ -22,13 +22,13 @@
         <div class="row justify-content-md-center">
             <div class="col-4">
                 <div class="card border-secondary mb-3" style="max-width: 22rem;">
-                    <div class="card-header text-center">{{ profil.firstname }} {{ profil.lastname }}</div>
+                    <div class="card-header text-center">{{ app.user.firstname }} {{ app.user.lastname }}</div>
                     <div class="card-body">
-                        <h4 class="card-title text-center">{{ profil.poste }}</h4>
+                        <h4 class="card-title text-center">{{ app.user.poste }}</h4>
                         <ul style="list-style-type: none;">
-                            <li><p class="card-text"><i class="fas fa-road mr-3"></i>{{ profil.address }}, {{ profil.zipcode }} {{ profil.city }}</p></li>
-                            <li><p class="card-text"><i class="fas fa-envelope mr-3"></i>{{ profil.email }}</p></li>
-                            <li><p class="card-text"><i class="fas fa-phone mr-3"></i>{{ profil.phone }}</p></li>
+                            <li><p class="card-text"><i class="fas fa-road mr-3"></i>{{ app.user.address }}, {{ app.user.zipcode }} {{ app.user.city }}</p></li>
+                            <li><p class="card-text"><i class="fas fa-envelope mr-3"></i>{{ app.user.email }}</p></li>
+                            <li><p class="card-text"><i class="fas fa-phone mr-3"></i>{{ app.user.phone }}</p></li>
                         </ul>
                     </div>
                 </div>
@@ -38,14 +38,14 @@
         <div class="row ">
             <div class="col-12">
                 <h4>Présentation : </h4>
-                <p>{{ profil.presentation | raw }}</p>
+                <p>{{ app.user.presentation | raw }}</p>
             </div>
         </div>
         {# Parcours #}
         <div class="row ">
             <div class="col-12">
                 <h4>Parcours : </h4>
-                <p>{{ profil.course | raw }}</p>
+                <p>{{ app.user.course | raw }}</p>
             </div>
         </div>
         {# tableau des skill #}
@@ -63,7 +63,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for skill in profil.skills %}
+                        {% for skill in app.user.skills %}
                             {% if(skill.id%2 == 1) %}
                                 <tr class="table-active">
                             {% else %}
@@ -78,7 +78,6 @@
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ skill.id) }}">
                                         <button class="btn btn-icon"><i class="far fa-trash-alt"></i></button>
                                     </form>
-                                    {# <a href="{{ path('user.skill.delete', {id: skill.id}) }}"><i class="far fa-trash-alt"></i></a> #}
                                 </td>
                             </tr>
                         {% endfor %}
@@ -110,7 +109,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for project in profil.projects %}
+                        {% for project in app.user.projects %}
                             {% if(loop.index%2 == 1) %}
                                 <tr class="table-active">
                             {% else %}

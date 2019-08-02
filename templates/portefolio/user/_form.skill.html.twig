@@ -1,7 +1,22 @@
 {{ form_start(form) }}
     <div class="row mt-5">
         <div class="col-12">
-            {{ form_rest(form) }}
+            {{ form_row(form.logo) }}
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            {{ form_row(form.title) }}
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            {{ form_row(form.desciption) }}
+        </div>
+    </div>
+    <div class="row mt-5" hidden>
+        <div class="col-12">
+            {{ form_row(form.profil) }}
         </div>
     </div>
     <div class="row text-right mt-2">

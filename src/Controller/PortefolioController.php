@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Persistence\ObjectManager;
 // use App\Controller\SecurityController;
 use App\Form\ProjectType;
+use App\Form\ProfilType;
 use App\Form\SkillType;
 use App\Repository\ProfilRepository;
 use App\Repository\ProjectRepository;
@@ -17,6 +18,7 @@ use App\Entity\Profil;
 use App\Entity\Skill;
 use App\Entity\Project;
 use App\Entity\Techno;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -61,19 +63,18 @@ class PortefolioController extends AbstractController {
     /**
      * @Route("/portefolio/user", name="homePageUser")
      */
-    public function homepageUser(): Response {
-        // $testing = $this->profilRepository->find(2);
-        // return $this->render('portefolio/user/home.html.twig', [
-        //     'profil' => $testing,
-        // ]);
+    public function homepageUser(UserInterface $user): Response {
+        $truc = json_encode($user);
+        dump($user->getSkills());
         return $this->render('portefolio/user/home.html.twig');
     }
     
     /**
      * @Route("/portefolio/user/project/new", name="user.project.new")
      */
-    public function newProject(Request $request): Response {
+    public function newProject(UserInterface $user, Request $request): Response {
         $project = new Project();
+        $project->setProfil($user);
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
@@ -98,9 +99,13 @@ class PortefolioController extends AbstractController {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->flush();
-            $this->addFlash('success', 'Projet modifié avec succès');
-            return $this->redirectToRoute('homePageUser');
+            // if ($form->get('profil')->getData() == $project->getProfil()) {
+                $this->em->flush();
+                $this->addFlash('success', 'Projet modifié avec succès');
+                return $this->redirectToRoute('homePageUser');
+            // } else {
+            //     $this->addFlash('error', 'Une erreur c\'est produite');
+            // }
         }
 
         return $this->render('portefolio/user/edit.project.html.twig', [
@@ -112,10 +117,11 @@ class PortefolioController extends AbstractController {
     /**
      * @Route("/portefolio/user/skill/new/", name="user.skill.new")
      */
-    public function newSkill(Profil $profil, Request $request): Response {
+    public function newSkill(UserInterface $user, Request $request): Response {
         $skill = new Skill();
         // dump($profil);
         // $skill->setProfil($profil);
+        $skill->setProfil($user);
         $form = $this->createForm(SkillType::class, $skill);
         $form->handleRequest($request);
 
@@ -177,5 +183,24 @@ class PortefolioController extends AbstractController {
             $this->addFlash('success', 'Projet supprimé avec succès');
         // }
         return $this->redirectToRoute('homePageUser');
+    }
+
+    /**
+     * @Route("/portefolio/user/setting", name="user.setting")
+     */
+    public function editProfil(UserInterface $user, Request $request): Response {
+        $form = $this->createForm(ProfilType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            $this->addFlash('success', 'Profile modifié avec succès');
+            return $this->redirectToRoute('homePageUser');
+        }
+
+        return $this->render('portefolio/user/setting.html.twig', [
+            'profil' => $user,
+            'form' => $form->createView()
+        ]);
     }
 }

@@ -19,7 +19,7 @@ class SkillType extends AbstractType
             ->add('desciption')
             ->add('profil', EntityType::class, [
             'class' => Profil::class,
-            'choice_label' => 'id'
+            'choice_label' => 'email'
             ]);
         ;
     }

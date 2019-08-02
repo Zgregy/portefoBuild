@@ -21,7 +21,7 @@ class ProjectType extends AbstractType
             ->add('longDescription')
             ->add('profil', EntityType::class, [
                 'class' => Profil::class,
-                'choice_label' => 'id'
+                'choice_label' => 'id',
                 ]);
         ;
     }

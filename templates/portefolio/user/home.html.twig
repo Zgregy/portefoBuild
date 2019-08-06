@@ -30,6 +30,7 @@
                     <div class="card-header text-center">{{ app.user.firstname }} {{ app.user.lastname }}</div>
                     <div class="card-body">
                         <h4 class="card-title text-center">{{ app.user.poste }}</h4>
+                        <img class=" mb-4"  style="height: auto; width: 100%; display: block;" src="{{ vich_uploader_asset(app.user, 'imageFile') }}" alt="Card image">
                         <ul style="list-style-type: none;">
                             <li><p class="card-text"><i class="fas fa-road mr-3"></i>{{ app.user.address }}, {{ app.user.zipcode }} {{ app.user.city }}</p></li>
                             <li><p class="card-text"><i class="fas fa-envelope mr-3"></i>{{ app.user.email }}</p></li>

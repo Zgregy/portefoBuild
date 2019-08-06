@@ -1,5 +1,10 @@
 {{ form_start(form) }}
     <div class="row mt-5">
+        <div class="col-12">
+            {{ form_row(form.imageFile) }}
+        </div>
+    </div>
+    <div class="row ">
         <div class="col-6">
             {{ form_row(form.firstname, {'attr': {'placeholder': 'Prénom'}}) }}
         </div>

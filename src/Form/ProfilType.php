@@ -6,6 +6,7 @@ use App\Entity\Profil;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class ProfilType extends AbstractType
@@ -13,6 +14,9 @@ class ProfilType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('imageFile', FileType::class, [
+                'required' => false
+            ])
             ->add('firstname')
             ->add('lastname')
             ->add('poste')

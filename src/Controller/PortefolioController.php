@@ -65,8 +65,6 @@ class PortefolioController extends AbstractController {
      * @Route("/portefolio/user", name="homePageUser")
      */
     public function homepageUser(UserInterface $user): Response {
-        $truc = json_encode($user);
-        dump($user->getSkills());
         return $this->render('portefolio/user/home.html.twig');
     }
     
@@ -108,6 +106,7 @@ class PortefolioController extends AbstractController {
             //     $this->addFlash('error', 'Une erreur c\'est produite');
             // }
         }
+        dump($project);
 
         return $this->render('portefolio/user/edit.project.html.twig', [
             'project' => $project,
@@ -130,7 +129,7 @@ class PortefolioController extends AbstractController {
             $this->em->persist($skill);
             $this->em->flush();
             $this->addFlash('success', 'Compétence créée avec succès');
-            // return $this->redirectToRoute('homePageUser');
+            return $this->redirectToRoute('homePageUser');
         }
 
         return $this->render('portefolio/user/new.skill.html.twig', [
@@ -178,11 +177,11 @@ class PortefolioController extends AbstractController {
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteProject(Project $project, Request $request) {
-        // if ($this->isCsrfTokenValid('delete' . $project->getId(), $request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $project->getId(), $request->get('_token'))) {
             $this->em->remove($project);
             $this->em->flush();
             $this->addFlash('success', 'Projet supprimé avec succès');
-        // }
+        }
         return $this->redirectToRoute('homePageUser');
     }
 

@@ -9,6 +9,48 @@
                 <h1>Edition d'un projet</h1>
             </div>
         </div>
+        <div class="row text-center mt-5">
+            <div class="col-12">
+                {# tableau des technos #}
+                <div class="row text-center mt-5">
+                    <div class="col-12 pr-0 pl-0" style="border: solid 1px black;">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr class="table-info">
+                                    <th colspan="2"><h5>Tableau des téchnologie<h5></th>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Technologie name</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 {% for techno in project.technos %}
+                                   {% if(loop.index%2 == 1) %}
+                                        <tr class="table-active">
+                                    {% else %}
+                                        <tr class="table-secondary">
+                                    {% endif %}
+                                        <th scope="row">{{ techno.name }}</th>
+                                        <td>
+                                            <a class="btn btn-icon" href="{#{{ path('user.techno.edit', {id: techno.id}) }}#}"><i class="far fa-edit"></i></a> 
+                                            <form method="post" action="{#{{ path('user.techno.delete', {id: techno.id}) }}#}" style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr de vouloir supprimer ce projet ?')">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ techno.id) }}">
+                                                <button class="btn btn-icon"><i class="far fa-trash-alt"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                {# <tr>  #}
+                            </tbody>
+                        </table> 
+                    </div>
+                </div>
+
+            </div>
+        </div>
         {{ include('portefolio/user/_form.project.html.twig', {button: 'Editer'}) }}
+        
     </div>
 {% endblock %}

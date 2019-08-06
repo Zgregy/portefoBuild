@@ -4,11 +4,14 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
+
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+// use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProfilRepository")
@@ -16,6 +19,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *  fields={"email"},
  *  message="L'email que vous avez indiqué est déjà utilisé !"
  * )
+ * @Vich\Uploadable
  */
 class Profil implements UserInterface
 {
@@ -97,6 +101,23 @@ class Profil implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="profil")
      */
     private $projects;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255) 
+     */
+    private $filename;
+
+    /**
+     * @var File
+     * @Vich\UploadableField(mapping="user_image", fileNameProperty="filename")
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
 
     public function __construct()
     {
@@ -311,5 +332,44 @@ class Profil implements UserInterface
 
     public function getRoles() {
         return ['ROLE_USER'];
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(?string $filename): self
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): self
+    {
+        $this->imageFile = $imageFile;
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
     }
 }

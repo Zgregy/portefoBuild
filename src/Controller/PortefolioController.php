@@ -10,6 +10,7 @@ use App\Form\SkillType;
 // use App\Controller\SecurityController;
 use App\Form\ProfilType;
 use App\Form\ProjectType;
+use App\Form\TechnoType;
 use App\Repository\SkillRepository;
 use App\Repository\ProfilRepository;
 use App\Repository\ProjectRepository;
@@ -106,13 +107,61 @@ class PortefolioController extends AbstractController {
             //     $this->addFlash('error', 'Une erreur c\'est produite');
             // }
         }
-        dump($project);
 
         return $this->render('portefolio/user/edit.project.html.twig', [
-            'project' => $project,
+            "project" => $project,
             'form' => $form->createView()
         ]);
     }
+    
+    // /**
+    //  * @Route("/portefolio/user/project/{id}/techno/new", name="user.project.techno.new")
+    //  */
+    // public function newTechno(Project $project, Request $request): Response {
+    //     $techno = new Techno();
+    //     $techno->setProject($project);
+    //     $form = $this->createForm(TechnoType::class, $techno);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $this->em->persist($techno);
+    //         $this->em->flush();
+    //         $this->addFlash('success', 'techno modifié avec succès');
+    //         return $this->redirectToRoute('user.project.edit', array(id => $project->getId()));
+    //     }
+
+    //     return $this->render('portefolio/user/new.techno.html.twig', [
+    //         'techno' => $techno,
+    //         'form' => $form->createView()
+    //     ]);
+    // }
+    
+    // /**
+    //  * @Route("/portefolio/user/project/edit/{id}", name="user.project.edit")
+    //  */
+    // public function editProject(Project $project, Techno $techno, Request $request): Response {
+    //     $form = $this->createForm(ProjectType::class, $project);
+    //     $form->handleRequest($request);
+        
+    //     $formTech = $this->createForm(TechnoType::class, $techno);
+    //     $formTech->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         // if ($form->get('profil')->getData() == $project->getProfil()) {
+    //             $this->em->flush();
+    //             $this->addFlash('success', 'Projet modifié avec succès');
+    //             return $this->redirectToRoute('homePageUser');
+    //         // } else {
+    //         //     $this->addFlash('error', 'Une erreur c\'est produite');
+    //         // }
+    //     }
+
+    //     return $this->render('portefolio/user/edit.project.html.twig', [
+    //         'project' => $project,
+    //         'form' => $form->createView(),
+    //         'formTech' => $formTech->createView()
+    //     ]);
+    // }
     
     /**
      * @Route("/portefolio/user/skill/new/", name="user.skill.new")

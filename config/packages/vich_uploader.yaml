@@ -5,3 +5,14 @@ vich_uploader:
         user_image:
             uri_prefix: /images/user
             upload_destination: '%kernel.project_dir%/public/images/user'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+
+        skill_image:
+            uri_prefix: /images/skill
+            upload_destination: '%kernel.project_dir%/public/images/skill'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+
+        project_image:
+            uri_prefix: /images/project
+            upload_destination: '%kernel.project_dir%/public/images/project'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer

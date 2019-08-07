@@ -4,24 +4,14 @@
             {{ form_row(form.imageFile) }}
         </div>
     </div>
-    <div class="row mt-5">
+    <div class="row ">
         <div class="col-12">
-            {{ form_row(form.title) }}
-        </div>
-    </div>
-    <div class="row mt-5">
-        <div class="col-12">
-            {{ form_row(form.desciption) }}
-        </div>
-    </div>
-    <div class="row mt-5" hidden>
-        <div class="col-12">
-            {{ form_row(form.profil) }}
+            {{ form_row(form.firstname, {'attr': {'placeholder': 'Prénom'}}) }}
         </div>
     </div>
     <div class="row text-right mt-2">
         <div class="col-12">
-            <a  href="{{ path('homePageUser') }}" class="btn btn-primary">Annuler</a>
+            <a  href="{% if not app.user %} {{ path('portefolio') }} {% else %} {{ path('homePageUser') }} {% endif %}" class="btn btn-primary">Annuler</a>
             <button type="submit" class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
         </div>
     </div>

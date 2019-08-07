@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SkillRepository")
+ * @Vich\Uploadable
  */
 class Skill
 {
@@ -16,10 +19,22 @@ class Skill
      */
     private $id;
 
+    // /**
+    //  * @ORM\Column(type="string", length=255)
+    //  */
+    // private $logo;
+
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     * @ORM\Column(type="string", length=255) 
      */
-    private $logo;
+    private $filename;
+
+    /**
+     * @var File
+     * @Vich\UploadableField(mapping="skill_image", fileNameProperty="filename")
+     */
+    private $imageFile;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -36,22 +51,27 @@ class Skill
      */
     private $profil;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $created_at;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getLogo(): ?string
-    {
-        return $this->logo;
-    }
+    // public function getLogo(): ?string
+    // {
+    //     return $this->logo;
+    // }
 
-    public function setLogo(string $logo): self
-    {
-        $this->logo = $logo;
+    // public function setLogo(string $logo): self
+    // {
+    //     $this->logo = $logo;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getTitle(): ?string
     {
@@ -85,6 +105,45 @@ class Skill
     public function setProfil(?Profil $profil): self
     {
         $this->profil = $profil;
+
+        return $this;
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(?string $filename): self
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): self
+    {
+        $this->imageFile = $imageFile;
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }

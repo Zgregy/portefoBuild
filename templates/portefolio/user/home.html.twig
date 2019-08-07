@@ -60,9 +60,10 @@
                 <table class="table table-hover mb-0">
                     <thead>
                         <tr class="table-info">
-                            <th colspan="3"><h5>Tableau des compétences<h5></th>
+                            <th colspan="4"><h5>Tableau des compétences<h5></th>
                         </tr>
                         <tr>
+                            <th scope="col">Picture</th>
                             <th scope="col">Title</th>
                             <th scope="col">Description</th>
                             <th scope="col">Action</th>
@@ -75,8 +76,11 @@
                             {% else %}
                                 <tr class="table-secondary">
                             {% endif %}
-                                <th scope="row">{{ skill.title }}</th>
-                                <td>{{ skill.desciption }}</td>
+                                {# <th width="200" scope="row"><img style="height: auto; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22318%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20318%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_158bd1d28ef%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_158bd1d28ef%22%3E%3Crect%20width%3D%22318%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22129.359375%22%20y%3D%2297.35%22%3EImage%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Card image"></th> #}
+                                <th width="200" scope="row"><img style="height: auto; width: 100%; display: block;" src="{{ vich_uploader_asset(skill, 'imageFile') }}" alt="Card image"></th>
+                                {# <th scope="row">{{ skill.title }}</th> #}
+                                <td>{{ skill.title }}</td>
+                                <td>{{ skill.desciption | raw }}</td>
                                 <td>
                                     <a class="btn btn-icon" href="{{ path('user.skill.edit', {id: skill.id}) }}"><i class="far fa-edit"></i></a> 
                                     <form method="post" action="{{ path('user.skill.delete', {id: skill.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr de vouloir supprimer cette compétence ?')">
@@ -103,9 +107,10 @@
                 <table class="table table-hover mb-0">
                     <thead>
                         <tr class="table-info">
-                            <th colspan="6"><h5>Tableau des projets<h5></th>
+                            <th colspan="7"><h5>Tableau des projets<h5></th>
                         </tr>
                         <tr>
+                            <th scope="col">Picture</th>
                             <th scope="col">Project name</th>
                             <th scope="col">Realized</th>
                             <th scope="col">Short description</th>
@@ -121,10 +126,11 @@
                             {% else %}
                                 <tr class="table-secondary">
                             {% endif %}
-                                <th scope="row">{{ project.name }}</th>
+                                <th width="200" scope="row"><img style="height: auto; width: 100%; display: block;" src="{{ vich_uploader_asset(project, 'imageFile') }}" alt="Card image"></th>
+                                <td>{{ project.name }}</td>
                                 <td>{{ project.realized }}</td>
                                 <td>{{ project.shortDescription }}</td>
-                                <td>{{ project.longDescription }}</td>
+                                <td>{{ project.longDescription | raw }}</td>
                                 <td>
                                     <ul>
                                         {% for techno in project.technos %}

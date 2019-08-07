@@ -11,6 +11,20 @@
         </div>
         <div class="row text-center mt-5">
             <div class="col-12">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('error') %}
+                    <div class="alert alert-dismissible alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row text-center mt-5">
+            <div class="col-12">
                 {# tableau des technos #}
                 <div class="row text-center mt-5">
                     <div class="col-12 pr-0 pl-0" style="border: solid 1px black;">
@@ -47,7 +61,11 @@
                         </table> 
                     </div>
                 </div>
-
+                <div class="row text-right mt-2">
+                    <div class="col-12">
+                        <a href="{{ path('user.project.techno.new', {id: project.id}) }}" class="btn btn-primary">Nouvelle compétence</a>
+                    </div>
+                </div>
             </div>
         </div>
         {{ include('portefolio/user/_form.project.html.twig', {button: 'Editer'}) }}

@@ -5,9 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
+ * @Vich\Uploadable
  */
 class Project
 {
@@ -19,9 +22,16 @@ class Project
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     * @ORM\Column(type="string", length=255) 
      */
-    private $picture;
+    private $filename;
+
+    /**
+     * @var File
+     * @Vich\UploadableField(mapping="project_image", fileNameProperty="filename")
+     */
+    private $imageFile;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -53,6 +63,11 @@ class Project
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $created_at;
+
     public function __construct()
     {
         $this->technos = new ArrayCollection();
@@ -63,14 +78,41 @@ class Project
         return $this->id;
     }
 
-    public function getPicture(): ?string
+    // public function getPicture(): ?string
+    // {
+    //     return $this->picture;
+    // }
+
+    // public function setPicture(string $picture): self
+    // {
+    //     $this->picture = $picture;
+
+    //     return $this;
+    // }
+
+    public function getFilename(): ?string
     {
-        return $this->picture;
+        return $this->filename;
     }
 
-    public function setPicture(string $picture): self
+    public function setFilename(?string $filename): self
     {
-        $this->picture = $picture;
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): self
+    {
+        $this->imageFile = $imageFile;
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
+        }
 
         return $this;
     }
@@ -162,6 +204,18 @@ class Project
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }

@@ -87,6 +87,12 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0-12/js/all.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+        <script src="//cdn.ckeditor.com/4.12.1/basic/ckeditor.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                $('textarea.ckeditor').ckeditor();
+            });
+        </script>
         
         {% block javascripts %}{% endblock %}
     </body>

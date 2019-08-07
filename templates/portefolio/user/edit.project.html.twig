@@ -9,7 +9,7 @@
                 <h1>Edition d'un projet</h1>
             </div>
         </div>
-        <div class="row text-center mt-5">
+        <div class="row text-center">
             <div class="col-12">
                 {% for message in app.flashes('success') %}
                     <div class="alert alert-success">
@@ -23,7 +23,7 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="row text-center mt-5">
+        <div class="row text-center">
             <div class="col-12">
                 {# tableau des technos #}
                 <div class="row text-center mt-5">
@@ -47,8 +47,8 @@
                                     {% endif %}
                                         <th scope="row">{{ techno.name }}</th>
                                         <td>
-                                            <a class="btn btn-icon" href="{#{{ path('user.techno.edit', {id: techno.id}) }}#}"><i class="far fa-edit"></i></a> 
-                                            <form method="post" action="{#{{ path('user.techno.delete', {id: techno.id}) }}#}" style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr de vouloir supprimer ce projet ?')">
+                                            <a class="btn btn-icon" href="{{ path('user.project.techno.edit', {id: techno.id}) }}"><i class="far fa-edit"></i></a> 
+                                            <form method="post" action="{{ path('user.techno.delete', {id: techno.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr de vouloir supprimer ce projet ?')">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ techno.id) }}">
                                                 <button class="btn btn-icon"><i class="far fa-trash-alt"></i></button>

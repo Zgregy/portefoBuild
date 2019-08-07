@@ -114,27 +114,71 @@ class PortefolioController extends AbstractController {
         ]);
     }
     
-    // /**
-    //  * @Route("/portefolio/user/project/{id}/techno/new", name="user.project.techno.new")
-    //  */
-    // public function newTechno(Project $project, Request $request): Response {
-    //     $techno = new Techno();
-    //     $techno->setProject($project);
-    //     $form = $this->createForm(TechnoType::class, $techno);
-    //     $form->handleRequest($request);
+    /**
+     * @Route("/portefolio/user/project/{id}/techno/new", name="user.project.techno.new")
+     */
+    public function newTechno(Project $project, Request $request): Response {
+        // dump($project);
+        $techno = new Techno();
+        $techno->setProject($project);
+        // dump($techno->getProject()->getId());
+        $form = $this->createForm(TechnoType::class, $techno);
+        $form->handleRequest($request);
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $this->em->persist($techno);
-    //         $this->em->flush();
-    //         $this->addFlash('success', 'techno modifié avec succès');
-    //         return $this->redirectToRoute('user.project.edit', array(id => $project->getId()));
-    //     }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($techno);
+            $this->em->flush();
+            $this->addFlash('success', 'Techno créée avec succès');
+            return $this->redirectToRoute('user.project.edit', array("id" => $techno->getProject()->getId()));
+        }
 
-    //     return $this->render('portefolio/user/new.techno.html.twig', [
-    //         'techno' => $techno,
-    //         'form' => $form->createView()
-    //     ]);
-    // }
+        // return $this->render('portefolio/user/new.techno.html.twig');
+        return $this->render('portefolio/user/new.techno.html.twig', [
+            'techno' => $techno,
+            'form' => $form->createView()
+        ]);
+    }
+    
+    /**
+     * EN : This function allows you to modify a technology belonging to a project.
+     * FR : Cette fonction permet de modifier une technologie appartenant à un projet.
+     * 
+     * @param Techno
+     * @param Request
+     * @Route("/portefolio/user/techno/{id}/edit", name="user.project.techno.edit")
+     * @return Response
+     */
+    public function editTechno(Techno $techno, Request $request): Response {
+        $form = $this->createForm(TechnoType::class, $techno);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($techno);
+            $this->em->flush();
+            $this->addFlash('success', 'Techno modifié avec succès');
+            return $this->redirectToRoute('user.project.edit', array("id" => $techno->getProject()->getId()));
+        }
+
+        // return $this->render('portefolio/user/new.techno.html.twig');
+        return $this->render('portefolio/user/edit.techno.html.twig', [
+            'techno' => $techno,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/portefolio/user/Techno/delete/{id}", name="user.techno.delete")
+     * @param Project $project
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteTechno(Techno $techno, Request $request) {
+        if ($this->isCsrfTokenValid('delete' . $techno->getId(), $request->get('_token'))) {
+            $this->em->remove($techno);
+            $this->em->flush();
+            $this->addFlash('success', 'Techno supprimé avec succès');
+        }
+        return $this->redirectToRoute('user.project.edit', array("id" => $techno->getProject()->getId()));
+    }
     
     // /**
     //  * @Route("/portefolio/user/project/edit/{id}", name="user.project.edit")

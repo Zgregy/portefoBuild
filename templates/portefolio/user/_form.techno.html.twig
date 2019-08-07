@@ -1,17 +1,17 @@
 {{ form_start(form) }}
     <div class="row mt-5">
         <div class="col-12">
-            {{ form_row(form.imageFile) }}
+            {{ form_row(form.name) }}
         </div>
     </div>
-    <div class="row ">
+    <div class="row" hidden>
         <div class="col-12">
-            {{ form_row(form.firstname, {'attr': {'placeholder': 'Prénom'}}) }}
+            {{ form_row(form.project) }}
         </div>
     </div>
     <div class="row text-right mt-2">
         <div class="col-12">
-            <a  href="{% if not app.user %} {{ path('portefolio') }} {% else %} {{ path('homePageUser') }} {% endif %}" class="btn btn-primary">Annuler</a>
+            <a  href="{{ path('user.project.edit', {id : techno.project.id}) }}" class="btn btn-primary">Annuler</a>
             <button type="submit" class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
         </div>
     </div>

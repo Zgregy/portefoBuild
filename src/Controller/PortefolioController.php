@@ -23,6 +23,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
+
 
 class PortefolioController extends AbstractController {
     /**
@@ -66,6 +70,7 @@ class PortefolioController extends AbstractController {
      * @Route("/portefolio/user", name="homePageUser")
      */
     public function homepageUser(UserInterface $user): Response {
+        // dump($user->getId());
         return $this->render('portefolio/user/home.html.twig');
     }
     
@@ -299,5 +304,56 @@ class PortefolioController extends AbstractController {
             'profil' => $user,
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/portefolio/user/data/{id}", name="data")
+     */
+    public function data(Profil $profil, Request $request, UploaderHelper $helper) {
+        // dump(json_encode($profil));
+        // return $this->redirectToRoute('homePageUser');
+        // return "coucou";
+        $datas = array(
+            'filename' => $profil->getFilename(),
+            'firstname' => $profil->getFirstname(),
+            'lastname' => $profil->getLastname(),
+            'poste' => $profil->getPoste(),
+            'address' => $profil->getAddress(),
+            'zipcode' => $profil->getZipcode(),
+            'city' => $profil->getCity(),
+            'phone' => $profil->getPhone(),
+            'email' => $profil->getEmail(),
+            'course' => $profil->getCourse(),
+            'presentation' => $profil->getPresentation()
+        );
+
+        $skills = $profil->getSkills();
+        foreach ($skills as $key => $skill ) {
+            // $datas[$key]['filename'] = $skill->getFilename();
+            $datas['skills'][$key]['filename'] = $helper->asset($skill, 'imageFile');
+            $datas['skills'][$key]['title'] = $skill->getTitle();
+            $datas['skills'][$key]['description'] = $skill->getDesciption();
+        }
+
+        $projects = $profil->getProjects();
+        foreach ($projects as $key => $project ) {
+            // $datas[$key]['filename'] = $skill->getFilename();
+            $datas['projects'][$key]['name'] = $project->getName();
+            $datas['projects'][$key]['filename'] = $helper->asset($project, 'imageFile');
+            $datas['projects'][$key]['realized'] = $project->getRealized();
+            $datas['projects'][$key]['shortDescription'] = $project->getShortDescription();
+            $datas['projects'][$key]['longDescription'] = $project->getLongDescription();
+
+            $technos = $project->getTechnos();
+            foreach ($technos as $key2 => $techno ) {
+                // $datas[$key]['filename'] = $skill->getFilename();
+                $datas['projects'][$key]['technos'][$key2]['name'] = $techno->getName();
+            }
+        }
+
+        // return new JsonResponse($data);
+        $response = new Response(json_encode($datas, JSON_UNESCAPED_UNICODE));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 }

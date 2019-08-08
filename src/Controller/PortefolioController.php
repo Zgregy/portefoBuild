@@ -310,9 +310,6 @@ class PortefolioController extends AbstractController {
      * @Route("/portefolio/user/data/{id}", name="data")
      */
     public function data(Profil $profil, Request $request, UploaderHelper $helper) {
-        // dump(json_encode($profil));
-        // return $this->redirectToRoute('homePageUser');
-        // return "coucou";
         $datas = array(
             'filename' => $profil->getFilename(),
             'firstname' => $profil->getFirstname(),
@@ -351,9 +348,19 @@ class PortefolioController extends AbstractController {
             }
         }
 
+        
         // return new JsonResponse($data);
         $response = new Response(json_encode($datas, JSON_UNESCAPED_UNICODE));
         $response->headers->set('Content-Type', 'application/json');
+
+        // $filename = "/public/tmp/".uniqId().".json";
+        $filename = "../public/tmp/".uniqId().".json";
+
+        file_put_contents($filename, $response);
+
+        //Faut faire en sorte que le fichier soit téléchargé puis supprimer.
+        // header("Location: $filename");
+        
         return $response;
     }
 }
